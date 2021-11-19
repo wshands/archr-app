@@ -43,7 +43,6 @@ tryCatch({
 
 ## Lastly, install all of the ArchR dependencies that arent installed by default:
 library(ArchR)
-
 #ArchR::installExtraPackages()
 tryCatch({
     ArchR::installExtraPackages()
@@ -97,3 +96,14 @@ tryCatch({
     quit("no", -1)
   }
 )
+
+tryCatch({
+  install.packages(c("shiny", "shinydashboard"), repos="https://packagemanager.rstudio.com/cran/__linux__/focal/2021-04-23")
+},
+    error = function(e) {
+    message("Error installing shiny")
+    message(e$message)
+    quit("no", -1)
+  }
+)
+

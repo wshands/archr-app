@@ -1,5 +1,5 @@
 FROM us.gcr.io/broad-dsp-gcr-public/terra-jupyter-r:2.0.1
-#FROM hubmap/rocker-r-grch38:latest
+#FROM rocker/shiny-verse:4.0.4
 # Need to run as root to do apt-get update
 USER root
 
@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get -y install \
     build-essential \
+    git \
     libcairo2-dev \
     libcurl4-gnutls-dev \
     libncurses-dev \
@@ -18,6 +19,7 @@ RUN apt-get update \
     libssl-dev \
     python3-dev \
     python3-pip \
+    xdg-utils \
  && rm -rf /var/lib/apt/lists
 
 # Make sure a 'python' command is available so bedtools will install, as required in
@@ -79,6 +81,22 @@ RUN ./configure \
 
 WORKDIR /opt
 
-#COPY bin /opt
+COPY run_archr_app.R /opt
+
+RUN apt-get update && apt-get install firefox -y
+ENV BROWSER=/usr/bin/firefox
+ENV DISPLAY=:1
+
+RUN apt-get install -y xauth 
+#RUN  groupadd -g 1000 ubuntu && useradd -d /home/ubuntu -s /bin/bash -m ubuntu -u 1000 -g 1000
+#RUN  useradd -d /home/ubuntu -s /bin/bash -m ubuntu -u 1001 -g 1000
+#USER ubuntu
+#ENV HOME /home/ubuntu
+
+ENV USER jupyter
+USER $USER 
 EXPOSE 8001
-#CMD ["/bin/bash"]
+
+ENTRYPOINT ["Rscript", "/opt/run_archr_app.R"]
+CMD ["Rscript", "/opt/run_archr_app.R"]
+#CMD /usr/bin/firefox
