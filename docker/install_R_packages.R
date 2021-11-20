@@ -87,6 +87,8 @@ tryCatch({
   }
 )
 
+<<<<<<< HEAD
+=======
 tryCatch({
     BiocManager::install("BSgenome.Hsapiens.UCSC.hg38")
 },
@@ -107,3 +109,4 @@ tryCatch({
   }
 )
 
+>>>>>>> 99317ff41c5f95fbe88054d9a178ef471db80a62
