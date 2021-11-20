@@ -87,26 +87,3 @@ tryCatch({
   }
 )
 
-<<<<<<< HEAD
-=======
-tryCatch({
-    BiocManager::install("BSgenome.Hsapiens.UCSC.hg38")
-},
-    error = function(e) {
-    message("Error installing UCSC hg38")
-    message(e$message)
-    quit("no", -1)
-  }
-)
-
-tryCatch({
-  install.packages(c("shiny", "shinydashboard"), repos="https://packagemanager.rstudio.com/cran/__linux__/focal/2021-04-23")
-},
-    error = function(e) {
-    message("Error installing shiny")
-    message(e$message)
-    quit("no", -1)
-  }
-)
-
->>>>>>> 99317ff41c5f95fbe88054d9a178ef471db80a62
