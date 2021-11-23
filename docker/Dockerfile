@@ -1,4 +1,6 @@
-FROM us.gcr.io/broad-dsp-gcr-public/terra-jupyter-r:2.0.1
+#FROM rocker/tidyverse:4.1.2
+FROM us.gcr.io/anvil-gcr-public/anvil-rstudio-bioconductor:3.14.0
+
 # Need to run as root to do apt-get update
 USER root
 
@@ -21,31 +23,16 @@ RUN apt-get update \
     xdg-utils \
  && rm -rf /var/lib/apt/lists
 
-# Make sure a 'python' command is available so bedtools will install, as required in
-# https://github.com/arq5x/bedtools2/blob/58e9973af1b3f5e3b26e5584aad7dc7b720f8765/Makefile#L192
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-
 COPY install_R_packages.R /opt
 
 RUN Rscript /opt/install_R_packages.R \
  && rm /opt/install_R_packages.R
 
-
-RUN apt-get update \
- && apt-get -y install \
-    libncurses-dev
+COPY requirements.txt /opt
+RUN python3 -m pip install -r /opt/requirements.txt \
+ && rm -rf /root/.cache/pip /opt/requirements.txt
 
 WORKDIR /opt
 
-COPY run_archr_app.R /opt
-
-RUN apt-get update && apt-get install firefox -y
-ENV BROWSER=/usr/bin/firefox
-ENV DISPLAY=:1
-
 USER $USER 
 EXPOSE 8001
-
-ENTRYPOINT ["Rscript", "/opt/run_archr_app.R"]
-CMD ["Rscript", "/opt/run_archr_app.R"]
-#CMD /usr/bin/firefox
