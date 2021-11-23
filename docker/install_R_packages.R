@@ -5,11 +5,6 @@ c(
  Ncpus=6
 )
 
-# Use R_REMOTES_NO_ERRORS_FROM_WARNINGS env var to avoid warnings flagged as failure as below
-# https://github.com/r-lib/remotes/issues/403
-# Error: (converted from warning) package ‘matrixStats’ was built under R version 4.0.5
-#Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
-
 # ArchR is designed to be run on Unix-based operating systems such as macOS and linux.
 # ArchR is NOT supported on Windows or other operating systems.
 

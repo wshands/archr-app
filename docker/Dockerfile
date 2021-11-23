@@ -1,6 +1,5 @@
 #FROM rocker/tidyverse:4.1.2
 FROM us.gcr.io/anvil-gcr-public/anvil-rstudio-bioconductor:3.14.0
-#FROM us.gcr.io/broad-dsp-gcr-public/terra-jupyter-r:2.0.1
 
 # Need to run as root to do apt-get update
 USER root
@@ -33,15 +32,7 @@ COPY requirements.txt /opt
 RUN python3 -m pip install -r /opt/requirements.txt \
  && rm -rf /root/.cache/pip /opt/requirements.txt
 
-#RUN apt-get update && apt-get install firefox -y
-#ENV BROWSER=/usr/bin/firefox
-#ENV DISPLAY=:1
-
 WORKDIR /opt
 
 USER $USER 
 EXPOSE 8001
-
-#ENTRYPOINT ["Rscript", "/opt/run_archr_app.R"]
-#CMD ["Rscript", "/opt/run_archr_app.R"]
-#CMD ["/usr/bin/firefox"]
