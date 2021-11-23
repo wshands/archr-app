@@ -1,0 +1,12 @@
+name: archr-app
+author: wshands
+description: |
+  Brings up ArchRBrowser
+version: 0.0.1
+services:
+  ucsc-gb:
+    image: "bigdog/bdc_archr_app:1.0.0"
+    port: 8001
+    pdMountPath: "/data"
+    pdAccessMode: "ReadWriteOnce"
+    environment: {}
